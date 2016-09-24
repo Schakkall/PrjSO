@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * GUILHERME BORONI PEREIRA 
+ * JOSÉ EURIQUE C. RIBEIRO JR
+ */
+
 public class Main {
 
 	static String lote = "entrada2.txt";
@@ -12,7 +17,13 @@ public class Main {
 		Memory m = filaProcessos(lote);
 		FIFO(m);
 		OTM(m);
+		LRU(m);
 	}
+
+	/**
+	 * OS DOIS PRIMEIROS ALGORITMOS UTILIZAM COMO QUADROS UM ARRAY, O SEGUNDO
+	 * UTILIZA A LISTA
+	 */
 
 	public static void OTM(Memory m) {
 		m.reset();
@@ -61,6 +72,28 @@ public class Main {
 			}
 		}
 		System.out.println("FIFO " + pagefault);
+	}
+
+	public static void LRU(Memory m) {
+		m.reset();
+		int pagefault = 0;
+		int quadroPos = 0;
+		for (Integer i : m.getReferencias()) {
+			if (!m.containsInList(i)) {
+				pagefault++;
+				if (m.isFull()) {
+					m.listQuadros.remove(0);
+					m.listQuadros.add(i);
+				} else {
+					m.listQuadros.add(i);
+				}
+			} else {
+				quadroPos = m.getPosition(i);
+				m.listQuadros.remove(quadroPos);
+				m.listQuadros.add(i);
+			}
+		}
+		System.out.println("LRU " + pagefault);
 	}
 
 	public static Memory filaProcessos(String arquivo) {

@@ -7,6 +7,8 @@ public class Memory {
 	private ArrayList<Integer> referencias;
 
 	public Integer[] quadros;
+	
+	public ArrayList<Integer> listQuadros;
 
 	public Memory(Integer nrreferencias) {
 		quadros = new Integer[nrreferencias];
@@ -44,10 +46,19 @@ public class Memory {
 		}
 		return false;
 	}
+	
+	public Boolean containsInList(Integer value) {
+		for (Integer integer : listQuadros) {
+			if (integer != null && integer.equals(value)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void reset() {
 		quadros = new Integer[quadros.length];
-
+		listQuadros = new ArrayList<Integer>();
 	}
 
 	public Integer getDistance(Integer value, Integer start) {
@@ -59,6 +70,19 @@ public class Memory {
 		}
 
 		return distance;
+	}
+	
+	public Integer getPosition(Integer value){
+		for (int cont = 0; cont < listQuadros.size(); cont++) {
+			if (value.equals(listQuadros.get(cont))){
+				return cont;
+			}
+		}
+		return null;
+	}
+	
+	public Boolean isFull(){
+		return (listQuadros.size() == quadros.length)?  true : false;
 	}
 
 }
